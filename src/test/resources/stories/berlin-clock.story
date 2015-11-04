@@ -35,6 +35,15 @@ RRRO
 YYRYYRYYRYY
 YYYY
 
+Scenario: Invalid Time format
+When the time is 12:00:00
+Then the clock should look like
+Y
+RROO
+RROO
+OOOOOOOOOOO
+OOOO
+
 Scenario: Midnight
 When the time is 24:00:00
 Then the clock should look like
@@ -43,6 +52,4 @@ RRRR
 RRRR
 OOOOOOOOOOO
 OOOO
-
-
 
