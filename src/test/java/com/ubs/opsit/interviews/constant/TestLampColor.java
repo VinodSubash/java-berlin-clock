@@ -15,9 +15,5 @@ public class TestLampColor {
         assertEquals("Lamp Color Value is Y","Y",LampColor.YELLOW.getValue());
     }
 
-    @Test
-    public void lampColor(){
-        assertEquals("Lamp Color is RED","RED",LampColor.RED);
-        assertEquals("Lamp Color is YELLOW","YELLOW",LampColor.YELLOW);
-    }
+
 }

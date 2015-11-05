@@ -15,9 +15,6 @@ public class TestLampState {
         assertEquals("Lamp State Value is Y","Y",LampState.ON.getValue());
     }
 
-    @Test
-    public void testLampStateConstant(){
-        assertEquals("Lamp State is OFF","OFF",LampState.OFF);
-        assertEquals("Lamp Color is ON","ON",LampState.ON);
-    }
+
+
 }
