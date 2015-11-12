@@ -3,11 +3,13 @@ package com.ubs.opsit.interviews.domain;
 import com.ubs.opsit.interviews.constant.LampColor;
 import com.ubs.opsit.interviews.constant.LampState;
 
+import java.io.Serializable;
+
 /**
  * Class to encapsulate Lamp property and behaviour.
  * It uses FluentInterface to build the object
  */
-public class Lamp {
+public class Lamp implements Serializable{
 
     /**
      * Property to hold Lamp state.

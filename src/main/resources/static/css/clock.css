@@ -1,0 +1,23 @@
+body {
+    background-color: #fff;
+}
+#circle {
+    position: relative;
+    background-color: White;
+    border:2px solid black;
+    margin: 20px auto;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+}
+h2{
+    display: block;
+    font-size: 2em;
+    color: blue;
+    font-weight: bold;
+}
+h4{
+    display: block;
+    color: yellow;
+    font-weight: bold;
+}

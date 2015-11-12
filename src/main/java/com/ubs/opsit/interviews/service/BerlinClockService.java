@@ -2,10 +2,17 @@ package com.ubs.opsit.interviews.service;
 
 import com.ubs.opsit.interviews.domain.BerlinClock;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Service call to implement TimeConverter interface and call berlinClock method for representation
  */
 public class BerlinClockService implements TimeConverter {
+
+    public BerlinClock getBerlinClock() {
+        return berlinClock;
+    }
 
     BerlinClock berlinClock;
 

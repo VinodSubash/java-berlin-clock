@@ -4,23 +4,29 @@ import com.ubs.opsit.interviews.constant.ClockConstants;
 import com.ubs.opsit.interviews.constant.LampColor;
 import com.ubs.opsit.interviews.constant.LampState;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.stream.Stream;
 import java.util.Arrays;
 
+
 /**
- * A domain class that represents BerlinClock and business logic to convert time into clock representation.
- * Two rows of lamp indicates hours of the day
- * Next two rows of lamp indicates minutes of the day
+ * A domain class to translate digital time to Berlin clock format.
+ * This class holds the representation of berlin and implement business logic to convert time.
+ * Two rows of lamp indicates hours of the day.
+ * Next two rows of lamp indicates minutes of the day.
  * On top of the clock yellow light that blinks on/off for every 2 seconds
  *
  */
+
 public class BerlinClock implements Serializable {
 
     private Lamp[][] clockArr = new Lamp[4][11];
+    private String clockOnOffStatus="";
     private static final long serialVersionUID = 1L;
+    private static final Logger LOG = LoggerFactory.getLogger(BerlinClock.class);
 
     /**
      * Initialize Lamp with default color and state for each row
@@ -30,6 +36,7 @@ public class BerlinClock implements Serializable {
         initiateHourLamp(1, ClockConstants.NO_OF_LAMPS_IN_SECOND_ROW);
         initiateMinuteLamp(2, ClockConstants.NO_OF_LAMPS_IN_THIRD_ROW, true);
         initiateMinuteLamp(3, ClockConstants.NO_OF_LAMPS_IN_FOURTH_ROW, false);
+        LOG.debug("Initialized the berlin clock");
     }
 
     /**
@@ -114,8 +121,8 @@ public class BerlinClock implements Serializable {
      * @param seconds
      * @return
      */
-    public String getClockOnOffStatus(final int seconds){
-        return seconds % 2 == 0 ?LampState.ON.getValue():LampState.OFF.getValue();
+    public String getClockOnOffStatus(){
+        return clockOnOffStatus;
     }
 
     /**
@@ -127,24 +134,34 @@ public class BerlinClock implements Serializable {
     }
 
     /**
-     * validates and Converts digital time to Berlin Clock way of representation.
+     * Builder method to convert time to berlin clock representation format.
      * @param strTime
      * @return str
      */
     public String convertTime(final String strTime){
-        if(StringUtils.isNotBlank(strTime) && isValidTimePattern(strTime)) {
+            setTime(strTime);
             StringBuilder builder = new StringBuilder();
+            builder.append(getClockOnOffStatus());
+            Arrays.stream(clockArr).forEach(clockSubArr -> iterate(clockSubArr, builder));
+            return builder.toString();
+    }
+
+    public void setTime(final String strTime){
+        if(StringUtils.isNotBlank(strTime) && isValidTimePattern(strTime)) {
             int[] arrTime = Stream.of(strTime.split(":")).mapToInt(Integer::parseInt).toArray();
             setLampStatusForHours(arrTime[0]);
             setLampStatusForMinutes(arrTime[1]);
-            String clockOnOffStatus = getClockOnOffStatus(arrTime[2]);
-            builder.append(clockOnOffStatus);
-            Arrays.stream(clockArr).forEach(clockSubArr -> iterate(clockSubArr, builder));
-            return builder.toString();
+            setClockOnOffStatus(arrTime[2]);
         }else{
-            throw new IllegalArgumentException("Invalid time given.Please provide valid format/shouldn't be blank");
+            LOG.error("Invalid time given :{}",strTime);
+            throw new IllegalArgumentException("Invalid time given " + strTime +".Please provide valid format/shouldn't be blank");
         }
     }
+
+    public void setClockOnOffStatus(final int seconds) {
+        clockOnOffStatus = seconds % 2 == 0 ?LampState.ON.getValue():LampState.OFF.getValue();
+    }
+
 
     /**
      * Validate the time format hh:mm:ss
@@ -152,17 +169,17 @@ public class BerlinClock implements Serializable {
      * @return
      */
     private boolean isValidTimePattern(String strTime){
-        return ClockConstants.TIME_FORMAT.matcher(strTime).matches();
+        return ClockConstants.TIME_PATTERN.matcher(strTime).matches();
     }
 
     /**
-     * Iterator to iterate multi dimensional array
+     * Iterator to iterate multi dimensional array and create a new line for each row.
      * @param arr
      * @param builder
      * @param <T>
      */
     private static <T> void iterate(T[] arr,StringBuilder builder) {
-        builder.append("\n");
+        builder.append("\r\n");
         Arrays.stream(arr).forEach(elem -> iterateAction(elem,builder));
     }
 
@@ -182,4 +199,5 @@ public class BerlinClock implements Serializable {
             builder.append(lampState);
         }
     }
+
 }

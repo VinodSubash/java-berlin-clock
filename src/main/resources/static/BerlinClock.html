@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello BerlinClock</title>
+    <link rel="stylesheet" type="text/css" href="css/clock.css">
+    <script src="js/sockjs-0.3.4.js"></script>
+    <script src="js/stomp.js"></script>
+    <script src="js/clock.js"></script>
+</head>
+<body onload="connect()">
+<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being enabled. Please enable
+    Javascript and reload this page!</h2></noscript>
+<div>
+    <h2 align="Center">Berlin Clock</h2>
+    <h4 align="center">A fun way to read the clock</h4>
+        <table>
+            <tr>
+                 <div id="circle" align="center"/>
+            </tr>
+            <tr>
+                <table id="berlinRecTable" align="center"/>
+            </tr>
+        </table>
+
+</div>
+</body>
+</html>

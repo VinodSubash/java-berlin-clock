@@ -13,7 +13,7 @@ public class TestBerlinClockService {
     @Test
     public void testConvertTime(){
         BerlinClockService service = new BerlinClockService();
-        assertEquals("Y\nOOOO\nOOOO\nOOOOOOOOOOO\nOOOO",service.convertTime("00:00:00"));
+        assertEquals("Y\r\nOOOO\r\nOOOO\r\nOOOOOOOOOOO\r\nOOOO",service.convertTime("00:00:00"));
     }
 
     @Test(expected = IllegalArgumentException.class)

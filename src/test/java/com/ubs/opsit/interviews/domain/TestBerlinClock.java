@@ -10,12 +10,15 @@ import org.junit.Test;
  */
 public class TestBerlinClock {
 
-    @Test
+   @Test
     public void testYellowLampShouldBlinkForEveryTwoSeconds(){
         BerlinClock clock = new BerlinClock();
-        assertEquals("Yellow light should click","Y",clock.getClockOnOffStatus(0));
-        assertEquals("Light should be Off","O",clock.getClockOnOffStatus(1));
-        assertEquals("Light should be Off","O",clock.getClockOnOffStatus(47));
+        clock.setClockOnOffStatus(00);
+        assertEquals("Yellow light should click","Y",clock.getClockOnOffStatus());
+        clock.setClockOnOffStatus(01);
+        assertEquals("Light should be Off","O",clock.getClockOnOffStatus());
+       clock.setClockOnOffStatus(59);
+        assertEquals("Light should be Off","O",clock.getClockOnOffStatus());
     }
 
     @Test
@@ -51,9 +54,11 @@ public class TestBerlinClock {
     public void testBerlinClockRepresentation(){
         BerlinClock clock = new BerlinClock();
         String berlinRep = clock.convertTime("13:17:01");
-        assertEquals("O\nRROO\nRRRO\nYYROOOOOOOO\nYYOO",berlinRep);
+        assertEquals("O\r\nRROO\r\nRRRO\r\nYYROOOOOOOO\r\nYYOO",berlinRep);
         berlinRep = clock.convertTime("24:00:00");
-        assertEquals("Y\nRRRR\nRRRR\nOOOOOOOOOOO\nOOOO",berlinRep);
+        assertEquals("Y\r\nRRRR\r\nRRRR\r\nOOOOOOOOOOO\r\nOOOO",berlinRep);
+        berlinRep = clock.convertTime("00:09:00");
+        assertEquals("Y\r\nOOOO\r\nOOOO\r\nYOOOOOOOOOO\r\nYYYY",berlinRep);
     }
 
     @Test(expected = IllegalArgumentException.class)
