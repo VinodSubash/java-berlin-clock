@@ -16,7 +16,6 @@ function connect() {
             showBerlinClockStatus(clockStatus);
         });
         stompClient.subscribe('/topic/clocktime', function(clockTime){
-            alert(clockTime)
             showBerlinClock(JSON.parse(clockTime.body));
         });
     });
